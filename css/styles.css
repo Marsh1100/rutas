@@ -4,34 +4,45 @@
     box-sizing: border-box;
 }
 
-header{
+h1,h2,h3{
     text-align: center;
-    height: 5vh;
+}
+
+header{
+    height: 7vh;
 }
 
 nav{
-    height: 5vh;
+    height: 6vh;
     background-color: rgb(182, 213, 248);
     display: flex;
 }
 
 main{
-    height: 85vh;
-
+    height: 75vh;
     width: 100%;
     /*background-image: url(/img/mapa.jpg);
     background-repeat: no-repeat;
     background-size: cover;*/
+    background-color: aliceblue;
+    overflow-y: scroll;
+}
+
+header, nav{ 
+    position: sticky;
+    top: 0;
 }
 
 footer{
     color: white;
     background-color: rgb(41, 123, 199);
-    height: 5vh;
+    height: 3vh;
 
     display: flex;
     align-items: center;
     justify-content: space-around;
+
+    width: 100%;
 }
 
 
@@ -41,6 +52,7 @@ footer{
 
 /*Sección de rutas*/
 .sectionRutas{
+    height: 75vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,6 +73,29 @@ footer{
     border: none;
 }
 
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555; 
+}
+
+
+
 /*Punto*/
 
 .formPunto{
@@ -69,4 +104,11 @@ footer{
     align-content: center;
 
     gap: 10px;
+}
+
+.card-puntos{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px;
+    gap: 20px;
 }

@@ -1,4 +1,8 @@
 
+export const $navNuevaRuta = document.getElementById('nav-nueva-ruta');
+export const $navRutas= document.getElementById('nav-rutas');
+
+
 export const $ruta = document.getElementById('input-ruta');
 export const $btnAddRuta = document.getElementById('btn-add-ruta');
 export const $tablaRutas = document.getElementById('lista-rutas');
@@ -11,3 +15,4 @@ export const $modalUrl = document.getElementById('url-punto');
 
 
 export const $btnAddPunto = document.getElementById('btn-add-punto');
+

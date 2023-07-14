@@ -1,7 +1,8 @@
 import { $btnAddRuta, $ruta,$tablaRutas, $modalTitle, $modalBody,$modalIdRuta,$modalNombre, $modalUrl, $btnAddPunto} from "./selectores.js";
-import { Ruta, Rutas} from "../Class/Rutas.js"
+import { Ruta, Rutas, Punto, Puntos} from "../Class/Rutas.js"
  
 export const rutas = new Rutas();
+export const puntos = new Puntos();
 
 export function agregarRuta(e){
     e.preventDefault(); // Evitar el envío del formulario
@@ -18,6 +19,7 @@ export function agregarRuta(e){
     $ruta.value=" ";
     
     renderRutas();
+    colapsarPuntos();
 }
 
 function renderRutas(){
@@ -47,8 +49,7 @@ function renderRutas(){
                     <tr>
                     <td colspan="5" style="padding: 0;">
                         <div class="collapse" id="p${id}">
-                        <div>
-                            ${ !p ? prueba2: prueba }
+                        <div class="card-puntos" id="c${id}">
                         </div>
                         </div>
                     </td>
@@ -61,8 +62,9 @@ function renderRutas(){
 }
 
 export function funcionesPuntos(e){
-    let id= e.target.id;
 
+    let id= e.target.id;
+    console.log(id)
     let listaRutas = rutas.getRutas();
     let index;
     //Conocer el indice de la coincidencia
@@ -73,14 +75,78 @@ export function funcionesPuntos(e){
     });
 
     if(e.target.className.includes('addPunto')){
+        $modalNombre.placeholder="Nombre del punto📍";
+        $modalUrl.placeholder="URL de imagen";
+
         $modalTitle.textContent = listaRutas[index].nomRuta;
-        $modalIdRuta.placeholder = listaRutas[index].id;
+        $modalIdRuta.value = id;
+        
     }else if(e.target.className.includes('bi-eye')){
-        renderPuntos();
+
+        renderPuntos(id.slice(1)); //Elimina el primer carácter para solo tener el id identificador (ruta)
+
     }
 
 }
 
-export function agregarPunto(){
+export function renderPuntos(rutaId){
+    let listaPuntos = puntos.getPuntos();
+
+    //Conocer los indices que corresponden a la idRutas de cada punto
+    let x =true;
+    listaPuntos.forEach((e)=>{
+        if(e.rutaId == rutaId){
+            const $cardPuntos = document.getElementById(`c${rutaId}`);
+            if(x){
+                $cardPuntos.innerHTML=" ";
+                x=false;
+            }
+
+            const {nomPuntos, imgURL} = e;
+
+            let html = `<div class="card" style="width: 18rem;">
+                            <img src="${imgURL}" class="card-img-top" alt="imagen.jpg">
+                            <div class="card-body">
+                            <p class="card-text"><b>${nomPuntos}</b></p>
+                            <div>
+                                <button type="button" class="btn btn-danger bi bi-trash3" id=""></button>
+                            </div>
+                            </div>
+                        </div>`;
+            
+            $cardPuntos.insertAdjacentHTML('beforeend', html);
+        }
+    })
+}
+
+export function agregarPunto(e){
+    e.preventDefault(); // Evitar el envío del formulario
+    e.stopPropagation(); 
+
+    console.log("entramos al botonnn");
+    let nombrePunto =$modalNombre.value
+    let imgPunto =  $modalUrl.value;
+    let idPunto = Date.now();
+    let rutaId = $modalIdRuta.value;
+    //Construimos objeto del nuevo punto;
+
+    let nuevoPunto = new Punto(idPunto,nombrePunto,rutaId,imgPunto);
+
+    puntos.addPunto(nuevoPunto);
+
+    renderPuntos(rutaId);
+    $modalNombre.value="";
+    $modalUrl.value="";
 
 }
+
+export function colapsarPuntos (){
+    let prueba = document.getElementsByClassName('collapse');
+    console.log(prueba)
+
+    for (let i = 0; i < prueba.length; i++) {
+        prueba[i].className = "collapse";
+      }
+   
+}
+

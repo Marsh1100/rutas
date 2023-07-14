@@ -1,154 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--Styles-->
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  
-    
-    <link rel="shortcut icon" href="img/camino.ico">
-    <title>Rutas</title>
-    
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--Styles-->
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+  <link rel="shortcut icon" href="img/camino.ico">
+  <title>Rutas</title>
+
 </head>
+
 <body>
 
-    <header>
-        <h1>Rutas</h1>
-    </header>
-    <nav>
-        <ul class="nav nav-underline">
-            <li class="nav-item">
-              <a class="nav-link" href="" style="color: rgb(6, 4, 97);">Rutas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="" style="color: rgb(6, 4, 97);">Crear nueva ruta</a>
-            </li>
-            
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: rgb(6, 4, 97);">
-                  Más opciones</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Editar</a></li>
-                  <li><a class="dropdown-item" href="#">Eliminar</a></li>
-                </ul>
-              </li>
-              
-            </li>
+  <header>
+    <h1>Rutas</h1>
+  </header>
+  <nav>
+    <ul class="nav nav-underline">
+      <li class="nav-item">
+        <a id="nav-rutas" class="nav-link" href="" style="color: rgb(6, 4, 97);">Rutas</a>
+      </li>
+      <li class="nav-item">
+        <a id="nav-nueva-ruta" class="nav-link" href="#nueva-ruta" style="color: rgb(6, 4, 97);">Crear nueva ruta</a>
+      </li>
 
-          </ul>
-    </nav>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+          style="color: rgb(6, 4, 97);">
+          Más opciones</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Editar</a></li>
+          <li><a class="dropdown-item" href="#">Eliminar</a></li>
+        </ul>
+      </li>
 
-    <main>
-        <section class="sectionRutas" id="rutas">
-            <form id="form-add-ruta" class="formRuta">
-                <input id="input-ruta" class="form-control form-control-sm" type="text" placeholder="Nombre de la ruta" aria-label=".form-control-sm example">
-                
-                <button type="button" class="btn btn-success" id="btn-add-ruta">Guardar</button>
-            </form>
-                
-            <table class="table  text-center">
-                <thead>
-                  <tr>
-                    <th scope="col" style="background-color: rgb(7, 7, 90);color:white;">N°</th>
-                    <th scope="col"style="background-color: rgb(7, 7, 90);color:white;">Ruta</th>
-                    <th scope="col"style="background-color: rgb(7, 7, 90);color:white;">Agregar punto</th>
-                    <th scope="col"style="background-color: rgb(7, 7, 90);color:white;">Puntos📍</th>
-                    <th scope="col"style="background-color: rgb(7, 7, 90);color:white;">Ver puntos</th>
+      </li>
 
-                  </tr>
-                </thead>
-                <tbody id="lista-rutas">
-                  <!--Se agregan las rutas dinámicamente-->
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>
-                        <button type="button" class="addPunto bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
-                    </td>
-                    <td>Mark</td>
-                    <td>
-                        <button type="button" class="bi bi-eye" data-bs-toggle="collapse" data-bs-target="#punto1" aria-expanded="false" aria-controls="collapseExample"></button>
-                    </td>
-                
-                  </tr>
-                  
-                  <tr>
-                    <td colspan="5" style="padding: 0;">
-                      <div class="collapse" id="punto1">
+    </ul>
+  </nav>
+
+  <main>
+    <section class="sectionRutas" id="rutas">
+      <h3 id="nueva-ruta">Agregar nueva ruta</h3>
+      <form id="form-add-ruta" class="formRuta">
+        <input id="input-ruta" class="form-control form-control-sm" type="text" placeholder="Nombre de la ruta"
+          aria-label=".form-control-sm example" required>
+
+        <button for="input-ruta" type="submit" class="btn btn-success" id="btn-add-ruta">Guardar</button>
+      </form>
+
+        <table class="table  text-center">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col" >N°</th>
+              <th scope="col" >Ruta</th>
+              <th scope="col" >Agregar punto</th>
+              <th scope="col" >Puntos📍</th>
+              <th scope="col" >Ver puntos</th>
+  
+            </tr>
+          </thead>
+          <tbody id="lista-rutas">
+            <!--Se agregan las rutas dinámicamente-->
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>
+                <button type="button" class="addPunto bi bi-plus-square" data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"></button>
+              </td>
+              <td>Mark</td>
+              <td>
+                <button type="button" class="bi bi-eye" data-bs-toggle="collapse" data-bs-target="#punto1"
+                  aria-expanded="false" aria-controls="collapseExample"></button>
+              </td>
+  
+            </tr>
+  
+            <tr>
+              <td colspan="5" style="padding: 0;">
+                <div class="collapse" id="punto1">
+                  <div id="card-puntos">
+  
+                    <!--Se agregan cartas de los puntos de forma dinámica-->
+                    <div class="card" style="width: 18rem;">
+                      <img src=" " class="card-img-top" alt="imagen.jpg">
+                      <div class="card-body">
+                        <p class="card-text"><b>${strMeal}</b></p>
                         <div>
-                          Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                          <button type="button" class="btn btn-danger bi bi-trash3" id=""></button>
                         </div>
                       </div>
-                    </td>
-                  </tr>
-                 
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>
-                        <button type="button" class="addPunto bi bi-plus-square" ></button>
-                    </td>
-                    <td>Mark</td>
+                    </div>
+                    
+                  </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-                    <td>
-                        <button type="button" class="bi bi-eye" data-bs-toggle="collapse" data-bs-target="#punto2" aria-expanded="false" aria-controls="collapseExample"></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="5" style="padding: 0;">
-                      <div class="collapse" id="punto2">
-                        <div>
-                          Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-            
-        </section>
+      
 
-    </main>
+    </section>
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <!--Agregar dinámicamente-->
-              <form id="form-add-punto" class="formPunto">
-                <label for="id-ruta">ID de la Ruta:</label>
-                <input id="id-ruta" class="form-control form-control-sm" type="text" placeholder="---" aria-label=".form-control-sm example" disabled>
-                
-                <input id="nombre-punto" class="form-control form-control-sm" type="text" placeholder="Nombre del punto📍" aria-label=".form-control-sm example" required >
-                
-                <input id="url-punto" class="form-control form-control-sm" type="text" placeholder="URL de imagen" aria-label=".form-control-sm example">
-                <button type="button" id="btn-add-punto" class="btn btn-success"  id="btn-add-punto">Guardar</button>
-              </form>
-          </div>
-          
+  </main>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <!--Agregar dinámicamente-->
+          <form id="form-add-punto" class="formPunto">
+            <label for="id-ruta">ID de la Ruta:</label>
+            <input id="id-ruta" class="form-control form-control-sm" type="text" aria-label=".form-control-sm example"
+              disabled>
+
+            <input id="nombre-punto" class="form-control form-control-sm" type="text" placeholder="Nombre del punto📍"
+              aria-label=".form-control-sm example" required>
+
+            <input id="url-punto" class="form-control form-control-sm" type="text" placeholder="URL de imagen"
+              aria-label=".form-control-sm example">
+            <button type="button" id="btn-add-punto" class="btn btn-success" data-bs-dismiss="modal">Guardar</button>
+          </form>
+        </div>
+
       </div>
     </div>
+  </div>
 
-    <footer> ©Margie Bocanegra</footer>
-    <!--Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
-    <!--SweetAlert2-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!--JavaScript-->
-    <script defer src="js/app.js" type="module"></script>
+  <!--Bootstrap-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <!--SweetAlert2-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!--JavaScript-->
+  <script defer src="js/app.js" type="module"></script>
 </body>
+
 </html>

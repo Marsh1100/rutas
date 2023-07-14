@@ -50,4 +50,8 @@ export class Puntos{
     removePunto(index){
         this.carrito.splice(index,1);
     }
+
+    getPuntos(){
+        return this.puntos
+    }
 }
