@@ -26,19 +26,19 @@
   <nav>
     <ul class="nav nav-underline">
       <li class="nav-item">
-        <a id="nav-rutas" class="nav-link" href="" style="color: rgb(6, 4, 97);">Rutas</a>
+        <a id="nav-rutas" class="nav-link" style="color: rgb(6, 4, 97);">Rutas</a>
       </li>
       <li class="nav-item">
         <a id="nav-nueva-ruta" class="nav-link" href="#nueva-ruta" style="color: rgb(6, 4, 97);">Crear nueva ruta</a>
       </li>
 
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
           style="color: rgb(6, 4, 97);">
           Más opciones</a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Editar</a></li>
-          <li><a class="dropdown-item" href="#">Eliminar</a></li>
+          <li><a class="dropdown-item" id="nav-editar-ruta">Editar</a></li>
+          <li><a class="dropdown-item" id="nav-eliminar-ruta" >Eliminar</a></li>
         </ul>
       </li>
 
@@ -65,45 +65,11 @@
               <th scope="col" >Agregar punto</th>
               <th scope="col" >Puntos📍</th>
               <th scope="col" >Ver puntos</th>
-  
+              <th scope="col" id="opciones-rutas" class="hidden"></th>
             </tr>
           </thead>
           <tbody id="lista-rutas">
             <!--Se agregan las rutas dinámicamente-->
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>
-                <button type="button" class="addPunto bi bi-plus-square" data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"></button>
-              </td>
-              <td>Mark</td>
-              <td>
-                <button type="button" class="bi bi-eye" data-bs-toggle="collapse" data-bs-target="#punto1"
-                  aria-expanded="false" aria-controls="collapseExample"></button>
-              </td>
-  
-            </tr>
-  
-            <tr>
-              <td colspan="5" style="padding: 0;">
-                <div class="collapse" id="punto1">
-                  <div id="card-puntos">
-  
-                    <!--Se agregan cartas de los puntos de forma dinámica-->
-                    <div class="card" style="width: 18rem;">
-                      <img src=" " class="card-img-top" alt="imagen.jpg">
-                      <div class="card-body">
-                        <p class="card-text"><b>${strMeal}</b></p>
-                        <div>
-                          <button type="button" class="btn btn-danger bi bi-trash3" id=""></button>
-                        </div>
-                      </div>
-                    </div>
-                    
-                  </div>
-              </td>
-            </tr>
           </tbody>
         </table>
 

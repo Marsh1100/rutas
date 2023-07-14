@@ -20,7 +20,7 @@ export class Rutas {
     }
 
     removeRuta(index){
-        this.carrito.splice(index,1);
+        this.rutas.splice(index,1);
     }
 
     getRutas(){

@@ -95,6 +95,11 @@ background: #555;
 }
 
 
+.tdOpciones{
+    display: flex;
+    justify-content: center;
+}
+
 
 /*Punto*/
 
@@ -111,4 +116,8 @@ background: #555;
     flex-wrap: wrap;
     padding: 25px;
     gap: 20px;
+}
+
+.hidden{
+    display: none;
 }
