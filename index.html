@@ -44,17 +44,17 @@
     </nav>
 
     <main>
-        <section class="rutas" id="rutas">
+        <section class="sectionRutas" id="rutas">
             <form id="form-add-ruta" class="formRuta">
                 <input id="input-ruta" class="form-control form-control-sm" type="text" placeholder="Nombre de la ruta" aria-label=".form-control-sm example">
                 
-                <button type="submit" class="btn btn-success" form="form-add-ruta">Guardar</button>
+                <button type="button" class="btn btn-success" id="btn-add-ruta">Guardar</button>
             </form>
                 
             <table class="table  text-center">
                 <thead>
                   <tr>
-                    <th scope="col" style="background-color: rgb(7, 7, 90);color:white;">ID</th>
+                    <th scope="col" style="background-color: rgb(7, 7, 90);color:white;">N°</th>
                     <th scope="col"style="background-color: rgb(7, 7, 90);color:white;">Ruta</th>
                     <th scope="col"style="background-color: rgb(7, 7, 90);color:white;">Agregar punto</th>
                     <th scope="col"style="background-color: rgb(7, 7, 90);color:white;">Puntos📍</th>
@@ -62,7 +62,8 @@
 
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="lista-rutas">
+                  <!--Se agregan las rutas dinámicamente-->
                   <tr>
                     <th scope="row">1</th>
                     <td>Mark</td>
@@ -126,9 +127,13 @@
           <div class="modal-body">
               <!--Agregar dinámicamente-->
               <form id="form-add-punto" class="formPunto">
-                <input class="form-control form-control-sm" type="text" placeholder="Nombre del punto📍" aria-label=".form-control-sm example">
-                <input class="form-control form-control-sm" type="text" placeholder="URL de imagen" aria-label=".form-control-sm example">
-                <button type="submit" id="btn-add-punto" class="btn btn-success" form="form-add-punto">Guardar</button>
+                <label for="id-ruta">ID de la Ruta:</label>
+                <input id="id-ruta" class="form-control form-control-sm" type="text" placeholder="---" aria-label=".form-control-sm example" disabled>
+                
+                <input id="nombre-punto" class="form-control form-control-sm" type="text" placeholder="Nombre del punto📍" aria-label=".form-control-sm example" required >
+                
+                <input id="url-punto" class="form-control form-control-sm" type="text" placeholder="URL de imagen" aria-label=".form-control-sm example">
+                <button type="button" id="btn-add-punto" class="btn btn-success"  id="btn-add-punto">Guardar</button>
               </form>
           </div>
           

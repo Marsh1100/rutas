@@ -40,7 +40,7 @@ footer{
 }
 
 /*Sección de rutas*/
-.rutas{
+.sectionRutas{
     display: flex;
     flex-direction: column;
     align-items: center;

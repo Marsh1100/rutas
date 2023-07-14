@@ -8,7 +8,7 @@ export class Ruta {
 
 export class Rutas {
     constructor(){
-        let rutas = [];
+        this.rutas = [];
     }
 
     addRuta(ruta){
@@ -22,6 +22,11 @@ export class Rutas {
     removeRuta(index){
         this.carrito.splice(index,1);
     }
+
+    getRutas(){
+        return this.rutas
+    }
+
 }
 
 export class Punto{
@@ -35,7 +40,7 @@ export class Punto{
 
 export class Puntos{
     constructor() {
-        const puntos=[];
+        this.puntos=[];
     }
 
     addPunto(punto){
