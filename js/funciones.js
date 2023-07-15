@@ -1,4 +1,4 @@
-import { $btnAddRuta, $ruta,$tablaRutas,$btnClassAddList,$btnClassVerList, $modalTitle, $modalBody,$modalIdRuta,$modalNombre, $modalUrl, $btnAddPunto,$opcionesRuta,  $tdBotonesList ,$btnClassEditList,$btnClassDeleteList, $ventanasCollapse} from "./selectores.js";
+import { $btnAddRuta, $ruta,$tablaRutas,$btnClassAddList,$btnClassVerList, $modalTitle, $modalBody,$modalIdRuta,$modalNombre, $modalUrl, $btnAddPunto,$opcionesRuta,  $tdBotonesList ,$btnClassEditList,$btnClassDeleteList} from "./selectores.js";
 import { Ruta, Rutas, Punto, Puntos} from "../Class/Rutas.js"
  
 export const rutas = new Rutas();
@@ -29,31 +29,31 @@ function renderRutas(){
     listaRutas.forEach((ruta,index)=>{
         const {id,nomRuta} = ruta;
         let html = `<tr>
-                    <th scope="row">${index+1}</th>
-                    <td>${nomRuta}</td>
-                    <td>
-                        <button id="${id}" type="button" class="addPunto bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
-                    </td>
-                    <td>0</td>
-                    <td>
-                        <button  id="v${id}" data-bs-target="#p${id}" type="button" class="bi bi-eye" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample"></button>
-                    </td>
-                    <td class="tdOpciones hidden">
-                        <button id="e${id}" type="button" class="btn btn-warning bi bi-pencil-square"></button>
+                        <th scope="row">${index+1}</th>
+                        <td>${nomRuta}</td>
+                        <td>
+                            <button id="${id}" type="button" class="addPunto bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
+                        </td>
+                        <td>0</td>
+                        <td>
+                            <button  id="v${id}" data-bs-target="#p${id}" type="button" class="bi bi-eye" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample"></button>
+                        </td>
+                        <td class="tdOpciones hidden">
+                            <button id="e${id}" type="button" class="btn btn-warning bi bi-pencil-square"></button>
 
-                        <button id="d${id}" type="button" class="btn btn-danger bi bi-trash"></button>
-                    </td>
+                            <button id="d${id}" type="button" class="btn btn-danger bi bi-trash"></button>
+                        </td>
                     </tr>
 
-                    <tr class="ventanaCollapse">
-                    <td colspan="5" style="padding: 0;">
-                        <div class="collapse" id="p${id}">
-                        <div class="card-puntos" id="c${id}">
-                        <!--Se añade de forma dinámica-->
-                        </div>
-                        </div>
-                    </td>
-                </tr>`;
+                    <tr>
+                        <td colspan="6" style="padding: 0;">
+                            <div class="collapse" id="p${id}">
+                            <div class="card-puntos" id="c${id}">
+                            <!--Se añade de forma dinámica-->
+                            </div>
+                            </div>
+                        </td>
+                    </tr>`;
 
         $tablaRutas.insertAdjacentHTML('beforeend',html);
             
@@ -76,10 +76,9 @@ export function funcionesPuntos(e){
 
     let idRuta= e.target.id;
     let listaRutas = rutas.getRutas();
-
-    let index = obtenerIndice(listaRutas,idRuta);
-
+    
     if(e.target.className.includes('addPunto')){
+        let index = obtenerIndice(listaRutas,idRuta);
         $modalNombre.placeholder="Nombre del punto📍";
         $modalUrl.placeholder="URL de imagen";
 
@@ -87,9 +86,10 @@ export function funcionesPuntos(e){
         $modalIdRuta.value = idRuta;
         
     }else if(e.target.className.includes('bi-eye')){
-        renderPuntos(id.slice(1)); //Elimina el primer carácter para solo tener el id identificador (ruta)
+        renderPuntos(idRuta.slice(1)); //Elimina el primer carácter para solo tener el id identificador (ruta)
 
     }else if(e.target.className.includes('bi-pencil-square')){
+        let index = obtenerIndice(listaRutas,idRuta.slice(1));
         editarRuta(index);
     }else if(e.target.className.includes('bi-trash')){
         eliminarRuta(index);
@@ -197,7 +197,7 @@ function habilitarBtns(habilitar,deleteRuta){
                 $btnClassDeleteList[i].style.display='none';
               }
         }
-        $opcionesRuta.style.display='block';
+        $opcionesRuta.style.display='table-cell';
         for (let i = 0; i < $btnClassAddList.length; i++) {
             $btnClassAddList[i].disabled = true;
             $btnClassAddList[i].style.color = 'gray';
@@ -205,7 +205,7 @@ function habilitarBtns(habilitar,deleteRuta){
             $btnClassVerList[i].disabled = true;
             $btnClassVerList[i].style.color = 'gray';   
             
-            $tdBotonesList[i].style.display='block';
+            $tdBotonesList[i].style.display='table-cell';
           }
     }
 }
@@ -232,10 +232,13 @@ export function eliminarRutas(){
     habilitarBtns(false, deleteRuta);
     
 }
-function editarRuta(e){
+function editarRuta(index){
+    let listaRutas = rutas.getRutas();
+
     $btnAddRuta.disabled = false;
-    $btnAddRuta.textContent = listaRutas[index].nomRUta;
     $ruta.disabled = false;
+    $ruta.value = listaRutas[index].nomRuta;
+
 }
 
 function eliminarRuta(index){

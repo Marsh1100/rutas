@@ -15,9 +15,6 @@ export const $tdBotonesList = document.getElementsByClassName('tdOpciones');
 export const $btnClassEditList = document.getElementsByClassName('bi-pencil-square');
 export const $btnClassDeleteList = document.getElementsByClassName('bi-trash');
 
-//No sirveeeee:c
-export const $ventanasCollapse = document.getElementsByClassName('ventanaCollapse');
-
 
 export const $modalTitle = document.querySelector('.modal-title');
 export const $modalBody = document.querySelector('.modal-body');
