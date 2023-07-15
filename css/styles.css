@@ -111,11 +111,34 @@ background: #555;
     gap: 10px;
 }
 
-.card-puntos{
-    display: flex;
-    flex-wrap: wrap;
+.cardPuntos{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-around;
     padding: 25px;
     gap: 20px;
+}
+
+@media (max-width: 1285px) {
+    /* … */
+    .cardPuntos{
+        display: grid;
+        grid-template-columns: auto auto auto ;
+        justify-content: space-around;
+        padding: 25px;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 975px) {
+    /* … */
+    .cardPuntos{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 25px;
+        gap: 20px;
+    }
 }
 
 .hidden{

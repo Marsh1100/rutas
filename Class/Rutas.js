@@ -47,8 +47,12 @@ export class Puntos{
         this.puntos.push(punto)
     }
 
-    removePunto(index){
-        this.carrito.splice(index,1);
+    removePunto(id){
+        this.puntos.forEach((punto, index)=>{
+            if(punto.id == id){
+                this.puntos.splice(index,1);
+            }
+        })
     }
 
     getPuntos(){

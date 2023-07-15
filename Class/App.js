@@ -1,5 +1,5 @@
 import { $navRutas,$navNuevaRuta,$navEditarRutas,$navEliminarRutas,$btnAddRuta, $ruta , $tablaRutas,$btnAddPunto} from "../js/selectores.js";
-import {colapsarPuntos,editarRutas,eliminarRutas,agregarRuta,rutas, funcionesPuntos,agregarPunto,renderPuntos} from "../js/funciones.js"
+import {tablaRutas,nuevaRuta,editarRutas,eliminarRutas,agregarRuta,rutas, funcionesPuntos,agregarPunto,renderPuntos,puntos} from "../js/funciones.js"
 
 
 export class App {
@@ -8,13 +8,14 @@ export class App {
     }
 
     initProgram(){
+        console.log(puntos)
         const listaRutas = rutas.getRutas();
         listaRutas.forEach(e =>{
             renderPuntos(e.id);
         });
 
-        $navRutas.addEventListener('click',colapsarPuntos)
-        $navNuevaRuta.addEventListener('click',colapsarPuntos);
+        $navRutas.addEventListener('click',tablaRutas)
+        $navNuevaRuta.addEventListener('click',nuevaRuta);
         $navEditarRutas.addEventListener('click',editarRutas);
         $navEliminarRutas.addEventListener('click',eliminarRutas);
 

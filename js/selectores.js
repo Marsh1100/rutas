@@ -3,12 +3,19 @@ export const $navNuevaRuta = document.getElementById('nav-nueva-ruta');
 export const $navRutas= document.getElementById('nav-rutas');
 export const $navEditarRutas= document.getElementById('nav-editar-ruta');
 export const $navEliminarRutas= document.getElementById('nav-eliminar-ruta');
+export const $secInicio= document.getElementById('inicio');
+export const $secRutas= document.getElementById('rutas');
+
+export const $subTitle= document.getElementById('nueva-ruta');
+export const $formAddRuta= document.getElementById('agregar-ruta');
+
 
 export const $opcionesRuta= document.getElementById('opciones-rutas');
 export const $ruta = document.getElementById('input-ruta');
 export const $btnAddRuta = document.getElementById('btn-add-ruta');
 export const $tablaRutas = document.getElementById('lista-rutas');
 
+export const $cartsPuntosList = document.getElementsByClassName('cardPuntos');
 export const $btnClassAddList = document.getElementsByClassName('addPunto');
 export const $btnClassVerList = document.getElementsByClassName('bi-eye');
 export const $tdBotonesList = document.getElementsByClassName('tdOpciones');

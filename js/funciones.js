@@ -1,4 +1,4 @@
-import { $btnAddRuta, $ruta,$tablaRutas,$btnClassAddList,$btnClassVerList, $modalTitle, $modalBody,$modalIdRuta,$modalNombre, $modalUrl, $btnAddPunto,$opcionesRuta,  $tdBotonesList ,$btnClassEditList,$btnClassDeleteList} from "./selectores.js";
+import {$secInicio,$secRutas,$formAddRuta, $btnAddRuta,$subTitle, $ruta,$tablaRutas,$cartsPuntosList,$btnClassAddList,$btnClassVerList, $modalTitle, $modalBody,$modalIdRuta,$modalNombre, $modalUrl, $btnAddPunto,$opcionesRuta,  $tdBotonesList ,$btnClassEditList,$btnClassDeleteList} from "./selectores.js";
 import { Ruta, Rutas, Punto, Puntos} from "../Class/Rutas.js"
  
 export const rutas = new Rutas();
@@ -8,33 +8,59 @@ export function agregarRuta(e){
     e.preventDefault(); // Evitar el envío del formulario
     e.stopPropagation();     
     
-    //Creación de objeto ruta
-    console.log($ruta.value);
-    let id = Date.now()
     let nombreRuta = $ruta.value;
 
-    let nuevaRuta = new Ruta(id,nombreRuta);
-    rutas.addRuta(nuevaRuta)
+    if($btnAddRuta.textContent == 'Guardar'){
+         //Creación de objeto ruta
+        let id = Date.now()
+        let nuevaRuta = new Ruta(id,nombreRuta);
+        rutas.addRuta(nuevaRuta);
+
+    }else{ //Edición de la ruta
+        let listaRutas = rutas.getRutas();
+        let idRuta = e.target.value;
+
+        let index = obtenerIndice(listaRutas,idRuta)
+
+        let edicionRuta = new Ruta(idRuta,nombreRuta);
+        rutas.editRuta(index,edicionRuta);
+        $btnAddRuta.innerHTML = 'Guardar';
+    }
 
     $ruta.value=" ";
-    
     renderRutas();
+
     colapsarPuntos();
 }
 
+function contarPuntos(id){
+    let contador = 0;
+    let listaPuntos = puntos.getPuntos();
+
+    listaPuntos.forEach(punto=>{
+        if(punto.rutaId === id){
+            contador +=1;
+        }
+       
+    });
+
+    return contador
+}
 function renderRutas(){
+    
     let listaRutas = rutas.getRutas();
     $tablaRutas.innerHTML=" ";
 
     listaRutas.forEach((ruta,index)=>{
         const {id,nomRuta} = ruta;
+        let contadorPuntos = contarPuntos(id); //Contar los puntos de cada RUTA
         let html = `<tr>
                         <th scope="row">${index+1}</th>
                         <td>${nomRuta}</td>
                         <td>
                             <button id="${id}" type="button" class="addPunto bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
                         </td>
-                        <td>0</td>
+                        <td id="${id}p">${contadorPuntos}</td>
                         <td>
                             <button  id="v${id}" data-bs-target="#p${id}" type="button" class="bi bi-eye" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample"></button>
                         </td>
@@ -48,9 +74,9 @@ function renderRutas(){
                     <tr>
                         <td colspan="6" style="padding: 0;">
                             <div class="collapse" id="p${id}">
-                            <div class="card-puntos" id="c${id}">
-                            <!--Se añade de forma dinámica-->
-                            </div>
+                                <div class="cardPuntos" id="c${id}">
+                                <!--Se añade de forma dinámica-->
+                                </div>
                             </div>
                         </td>
                     </tr>`;
@@ -58,11 +84,13 @@ function renderRutas(){
         $tablaRutas.insertAdjacentHTML('beforeend',html);
             
     });
-
 }
 
 function obtenerIndice(listaRutas,idRuta){
     let index;
+    if(isNaN(idRuta[0])){//Elimina el primer carácter para solo tener el id identificador (ruta) 
+        idRuta = idRuta.slice(1);
+    }
     //Conocer el indice de la coincidencia
     listaRutas.forEach((e,i)=>{
         if(e.id == idRuta){
@@ -73,58 +101,62 @@ function obtenerIndice(listaRutas,idRuta){
 }
 
 export function funcionesPuntos(e){
-
+    let clases = e.target.className;
     let idRuta= e.target.id;
     let listaRutas = rutas.getRutas();
+    let index = obtenerIndice(listaRutas,idRuta);
     
-    if(e.target.className.includes('addPunto')){
-        let index = obtenerIndice(listaRutas,idRuta);
+    if(clases.includes('addPunto')){
         $modalNombre.placeholder="Nombre del punto📍";
         $modalUrl.placeholder="URL de imagen";
 
         $modalTitle.textContent = listaRutas[index].nomRuta;
         $modalIdRuta.value = idRuta;
         
-    }else if(e.target.className.includes('bi-eye')){
-        renderPuntos(idRuta.slice(1)); //Elimina el primer carácter para solo tener el id identificador (ruta)
+    }else if(clases.includes('bi-eye')){
+        renderPuntos(idRuta); 
 
-    }else if(e.target.className.includes('bi-pencil-square')){
-        let index = obtenerIndice(listaRutas,idRuta.slice(1));
+    }else if(clases.includes('bi-pencil-square')){
         editarRuta(index);
-    }else if(e.target.className.includes('bi-trash')){
-        eliminarRuta(index);
+    }else if(clases.includes('bi-trash')){
+
+        if(!clases.includes('rutas')){
+            eliminarRuta(index,Number(idRuta.slice(1)));
+        }else{
+            console.log(e.target.id)
+        }
     }
 
 }
 
-export function renderPuntos(rutaId){
+export function renderPuntos(idRuta){
     let listaPuntos = puntos.getPuntos();
-
     //Conocer los indices que corresponden a la idRutas de cada punto
     let x =true;
     listaPuntos.forEach((e)=>{
-        if(e.rutaId == rutaId){
-            const $cardPuntos = document.getElementById(`c${rutaId}`);
+        if(e.rutaId == idRuta){
+            const $cardPuntos = document.getElementById(`c${idRuta}`);
             if(x){
                 $cardPuntos.innerHTML=" ";
                 x=false;
             }
 
-            const {nomPuntos, imgURL} = e;
+            const {id,nomPuntos, imgURL} = e;
 
             let html = `<div class="card" style="width: 18rem;">
                             <img src="${imgURL}" class="card-img-top" alt="imagen.jpg">
                             <div class="card-body">
                             <p class="card-text"><b>${nomPuntos}</b></p>
                             <div>
-                                <button type="button" class="btn btn-danger bi bi-trash3" id=""></button>
+                                <button type="button" class="btn btn-danger bi bi-trash rutas" id="${id}"></button>
                             </div>
                             </div>
                         </div>`;
             
             $cardPuntos.insertAdjacentHTML('beforeend', html);
         }
-    })
+    });
+
 }
 
 export function agregarPunto(e){
@@ -134,29 +166,47 @@ export function agregarPunto(e){
     let nombrePunto =$modalNombre.value
     let imgPunto =  $modalUrl.value;
     let idPunto = Date.now();
-    let rutaId = $modalIdRuta.value;
+    let rutaId = Number($modalIdRuta.value);
     //Construimos objeto del nuevo punto;
 
     let nuevoPunto = new Punto(idPunto,nombrePunto,rutaId,imgPunto);
 
     puntos.addPunto(nuevoPunto);
 
-    renderPuntos(rutaId);
-    $modalNombre.value="";
+    document.getElementById(`${rutaId}p`).textContent =  contarPuntos(rutaId);    $modalNombre.value="";
     $modalUrl.value="";
 
 }
+export function tablaRutas(){
+    $secInicio.style.display="none";
+    $formAddRuta.style.display="none";
 
-export function colapsarPuntos(){
+    $subTitle.textContent="Lista de rutas"
+    $secRutas.style.display="flex";
 
+    colapsarPuntos();
+}
+
+export function nuevaRuta(){
+    $secInicio.style.display="none";
+    $formAddRuta.style.display="flex";
+
+    $subTitle.textContent="Agregar nueva Ruta";
+    $secRutas.style.display="flex";
+
+    $ruta.placeholder="Nueva Ruta";
+
+    colapsarPuntos();
+}
+export function colapsarPuntos(e){
+   
     //Habilitar botones
     habilitarBtns(true);
 
     let listClass = document.getElementsByClassName('collapse');
-
     for (let i = 0; i < listClass.length; i++) {
         listClass[i].className = "collapse";
-      }
+    }
    
 }
 
@@ -167,7 +217,8 @@ function habilitarBtns(habilitar,deleteRuta){
         $ruta.disabled = false;
 
         for (let i = 0; i < $btnClassAddList.length; i++) {
-
+            let idRuta = $cartsPuntosList[i].id.slice(1);
+            renderPuntos(idRuta)
             $btnClassAddList[i].disabled = false;
             $btnClassAddList[i].style.color = 'green';
             
@@ -178,17 +229,16 @@ function habilitarBtns(habilitar,deleteRuta){
 
           }
     }else{
+
         $btnAddRuta.disabled = true;
         $ruta.disabled = true;
-
-
+    
         if(deleteRuta){
         //Ocultamos el boton editar
         for (let i = 0; i < $btnClassAddList.length; i++) {
             $btnClassEditList[i].style.display='none';
             $btnClassDeleteList[i].style.display='flex';
             $btnClassDeleteList[i].style='justify-content:center';
-
           }
         }else{
             for (let i = 0; i < $btnClassAddList.length; i++) {
@@ -211,7 +261,7 @@ function habilitarBtns(habilitar,deleteRuta){
 }
 
 
-export function editarRutas(){
+export function editarRutas(){//Nav editar
     colapsarPuntos();
     console.log('editar checccck');
     $opcionesRuta.textContent='Editar';
@@ -223,9 +273,8 @@ export function editarRutas(){
 }
 
 
-export function eliminarRutas(){
+export function eliminarRutas(){ //Nav eliminar
     colapsarPuntos();
-    console.log('eliminaaar checccck')
     $opcionesRuta.textContent='Eliminar';
     let deleteRuta = true;
     //Deshabilitando botones
@@ -234,16 +283,34 @@ export function eliminarRutas(){
 }
 function editarRuta(index){
     let listaRutas = rutas.getRutas();
+    console.log(index)
+
+    $btnAddRuta.innerHTML = "Editar";
+    $btnAddRuta.setAttribute("value",listaRutas[index].id )
 
     $btnAddRuta.disabled = false;
     $ruta.disabled = false;
     $ruta.value = listaRutas[index].nomRuta;
 
+
+    habilitarBtns(false,false);
+
 }
 
-function eliminarRuta(index){
-    rutas.removeRuta(index);
-    renderPuntos();
-    habilitarBtns(false, true);
+function eliminarRuta(indexR, idRuta){
+    rutas.removeRuta(indexR);
 
+    let listaPuntos = puntos.getPuntos();
+    listaPuntos.forEach((punto,index) =>{
+        console.log(punto.rutaId, idRuta, "igualar")
+        if(punto.rutaId === idRuta){
+            puntos.removePunto(punto.id);
+        }else{
+            console.log(index)
+        }
+    });
+
+    console.log(puntos.getPuntos());
+    renderRutas();
+    habilitarBtns(false,true);
 }
