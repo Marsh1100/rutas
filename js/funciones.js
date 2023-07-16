@@ -60,7 +60,7 @@ function renderRutas(){
                         <td>
                             <button id="${id}" type="button" class="addPunto bi bi-plus-square" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
                         </td>
-                        <td id="${id}p">${contadorPuntos}</td>
+                        <td>${contadorPuntos}</td>
                         <td>
                             <button  id="v${id}" data-bs-target="#p${id}" type="button" class="bi bi-eye" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample"></button>
                         </td>
@@ -114,7 +114,7 @@ export function funcionesPuntos(e){
         $modalIdRuta.value = idRuta;
         
     }else if(clases.includes('bi-eye')){
-        renderPuntos(idRuta); 
+        renderPuntos(idRuta.slice(1)); 
 
     }else if(clases.includes('bi-pencil-square')){
         editarRuta(index);
@@ -173,7 +173,10 @@ export function agregarPunto(e){
 
     puntos.addPunto(nuevoPunto);
 
-    document.getElementById(`${rutaId}p`).textContent =  contarPuntos(rutaId);    $modalNombre.value="";
+    console.log(puntos.getPuntos())
+    renderRutas(rutaId);
+    
+    $modalNombre.value="";
     $modalUrl.value="";
 
 }
@@ -218,7 +221,8 @@ function habilitarBtns(habilitar,deleteRuta){
 
         for (let i = 0; i < $btnClassAddList.length; i++) {
             let idRuta = $cartsPuntosList[i].id.slice(1);
-            renderPuntos(idRuta)
+            renderPuntos(idRuta);
+
             $btnClassAddList[i].disabled = false;
             $btnClassAddList[i].style.color = 'green';
             
@@ -237,6 +241,7 @@ function habilitarBtns(habilitar,deleteRuta){
         //Ocultamos el boton editar
         for (let i = 0; i < $btnClassAddList.length; i++) {
             $btnClassEditList[i].style.display='none';
+
             $btnClassDeleteList[i].style.display='flex';
             $btnClassDeleteList[i].style='justify-content:center';
           }
@@ -247,6 +252,8 @@ function habilitarBtns(habilitar,deleteRuta){
                 $btnClassDeleteList[i].style.display='none';
               }
         }
+
+        
         $opcionesRuta.style.display='table-cell';
         for (let i = 0; i < $btnClassAddList.length; i++) {
             $btnClassAddList[i].disabled = true;
@@ -263,7 +270,6 @@ function habilitarBtns(habilitar,deleteRuta){
 
 export function editarRutas(){//Nav editar
     colapsarPuntos();
-    console.log('editar checccck');
     $opcionesRuta.textContent='Editar';
 
     let deleteRuta = false;
@@ -292,21 +298,19 @@ function editarRuta(index){
     $ruta.disabled = false;
     $ruta.value = listaRutas[index].nomRuta;
 
-
-    habilitarBtns(false,false);
-
 }
 
 function eliminarRuta(indexR, idRuta){
     rutas.removeRuta(indexR);
 
     let listaPuntos = puntos.getPuntos();
+
     listaPuntos.forEach((punto,index) =>{
-        console.log(punto.rutaId, idRuta, "igualar")
+        console.log(punto.rutaId, idRuta, "(",index,")")
+
         if(punto.rutaId === idRuta){
+            console.log('coincidencia')
             puntos.removePunto(punto.id);
-        }else{
-            console.log(index)
         }
     });
 

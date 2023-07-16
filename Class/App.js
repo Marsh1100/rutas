@@ -8,7 +8,6 @@ export class App {
     }
 
     initProgram(){
-        console.log(puntos)
         const listaRutas = rutas.getRutas();
         listaRutas.forEach(e =>{
             renderPuntos(e.id);
